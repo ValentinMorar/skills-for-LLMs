@@ -1,0 +1,120 @@
+NAAS — Numbers As A String
+
+A string-only arithmetic specification. The goal is to make a language model
+compute with numbers by manipulating digit strings through explicit reasoning
+steps, without invoking any binary/numeric computation module (e.g. Python, a
+calculator, or built-in big-integer math).
+
+Modes
+
+`NAAS:rapid` — output only the final result, no explanation.
+`NAAS:decode` — output every step, with explanations.
+
+Core constraint
+
+Solve all calculations using reasoning and string manipulation only. Do not
+delegate the arithmetic to a binary computation module.
+
+Definitions
+
+Digit — a single symbol from: `0 1 2 3 4 5 6 7 8 9`
+Number — a string of digits written next to each other.
+Indexing convention in this document: `X[1]` is the first listed element of the
+working string `X`, `X[2]` the second, and so on.
+---
+Rule 1 — Comparing two digits
+Fixed order learned from the standard:
+```
+0 < 1 < 2 < 3 < 4 < 5 < 6 < 7 < 8 < 9
+```
+The digit that appears further to the left in that order is smaller.
+If both digits are at the same position in the order, they are equal.
+
+Rule 2 — Preparing the numbers (and comparing magnitude)
+
+Count the digits of each number.
+Pad the shorter number with leading `0`s so both have equal length.
+To compare magnitudes, scan left to right, digit by digit, applying Rule 1:
+`A[i] < B[i]` → A is smaller, STOP.
+`A[i] > B[i]` → A is larger, STOP.
+`A[i] == B[i]` → continue.
+All equal → the numbers are identical.
+
+Rule 3 — Adding two numbers
+
+Preparation
+
+Prepare both numbers (Rule 2: pad to equal length).
+Reverse both numbers → call them `A` and `B` (least-significant digit first).
+
+Iteration 1
+
+For each position `i`, write the pair sum as text: `A[i]+B[i]=?`
+Always answer on exactly 2 digits (zero-pad, e.g. `6` → `06`).
+The list of 2-digit answers are the groups.
+
+Iteration 2 and onward
+
+Form two numbers from the current groups:
+`A` = the first digit of every group (these are the carries).
+`B` = the last digit of every group (these are the kept digits).
+Shift the carries up by one position: Prepend a `0` to `A`.
+
+Inspect the new last (highest) digit of `A` — the carry out of the top
+position. Exactly one of the following applies (mutually exclusive branches):
+If it is `0` → remove it. (No new high-order digit; `A` and `B` stay equal length.)
+If it is `1` → keep it and append a `0` to the end of `B`. (A new high-order digit is created; both grow by one and stay equal length.)
+Write the new pairs `A[i]+B[i]=?` and answer again on exactly 2 digits.
+
+Stop when: the first digit of every group is `0` (no carries remain).
+
+Final
+
+Take the last digit of every group.
+Reverse the resulting string.
+Remove leading zeros.
+That is the result.
+
+Rule 4 — Subtracting two numbers
+
+Preparation
+
+Prepare both numbers (Rule 2: pad to equal length).
+Let `M` = minuend (the number you subtract from) and `S` = subtrahend.
+Compare their original magnitudes (Rule 2):
+If `M == S` → go directly to Final — equality (result is `0`).
+If `M > S` → keep order; the result will be non-negative.
+If `M < S` → swap (compute `S − M` instead) and remember to prepend a `−` sign at the Final step.
+Reverse both numbers → `A` (the larger / minuend) and `B` (the smaller / subtrahend), least-significant digit first.
+
+Iteration 1
+
+For each position `i`, prepend a `1` to `A[i]` (i.e. compute `10 + A[i]`) and subtract `B[i]`: write `1A[i] − B[i] = ?`.
+Always answer on exactly 2 digits.
+These 2-digit answers are the groups.
+
+Iteration 2 and onward
+
+Form two numbers from the current groups:
+`A` = the last digit of every group (the running result digits).
+`B` = the first digit of every group (the borrow flags: `1` = no borrow,
+`0` = borrow).
+In `B`, flip every digit (`0→1`, `1→0`) so that now `1` marks a borrow to propagate.
+Shift the borrows up by one position:
+Prepend a `0` to `B`.
+Inspect the new last (highest) digit of `B`. Exactly one applies:
+If it is `0` → remove it. (Normal case when `M > S`: no borrow leaves the top.)
+If it is `1` → keep it and append a `0` to the end of `A`. (Kept for symmetry; for a valid `M ≥ S` subtraction this branch does not occur.)
+Write the new pairs with the borrowed ten on `A` again: `1A[i] − B[i] = ?`, answering on exactly 2 digits.
+
+Stop when: the first digit of every group is `1` (no borrows remain).
+
+Final
+Take the last digit of every group.
+Reverse the resulting string.
+Remove leading zeros.
+If a swap happened in Preparation, prepend `−`.
+That is the result.
+
+Final — equality
+The numbers are equal in value; the result is `0`.
