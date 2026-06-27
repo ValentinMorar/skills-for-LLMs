@@ -1,0 +1,77 @@
+NAAS — Multiplication and Division
+
+Modes
+`NAAS:rapid` — output only the final result.
+`NAAS:decode` — output every step with explanations.
+
+Core principle
+Solve all arithmetic by recognizing single-digit facts and manipulating digit
+strings. A single-digit product, sum, difference, or comparison is recognized
+directly, not iterated. The algorithm's role is to place recognized parts in
+the correct columns and to certify results — not to generate them by search.
+Every operation has the same shape:
+parallel recognition (independent, O(1) depth) + a single carry/borrow chain.
+
+Conventions
+Digit: one of `0 1 2 3 4 5 6 7 8 9`. Fixed order `0<1<2<…<9`; the digit
+further left is smaller (magnitude comparison rule).
+Rank: count digit positions from the right starting at `0`. In
+`d_k … d_1 d_0`, digit `d_r` has rank `r`.
+Magnitude compare `X` vs `Y`: pad to equal length with leading zeros, scan
+left to right; first differing position decides; all equal → equal.
+---
+Procedure A — Multiplication ( A × B )
+Pass 1 — pairwise product grid (parallel).
+For every digit `A[i]` and `B[j]`, recognize `A[i] × B[j]` and write it on
+exactly two digits (zero-pad, `7 → 07`). All `n × m` products are
+independent.
+Placement rule (replaces partial-product alignment).
+Each product has `rank = rank(A[i]) + rank(B[j])`. Place its units digit in
+column `rank`, its tens digit in column `rank + 1`.
+Pass 2 — one positional addition + carry.
+For each column, add every digit that landed in it → raw column sums
+(columns are independent → parallel).
+Resolve carry right to left: column value `v` with incoming carry `c` gives
+digit `(v + c) mod 10`, outgoing carry `floor((v + c) / 10)`.
+Read digits high column → low column, drop leading zeros. That is `A × B`.
+Carry is the only sequential step. For very wide results, sum blocks of
+columns independently and combine by passing only the carry between blocks.
+Multiplication checklist
+[ ] every pairwise product written on exactly 2 digits
+[ ] each product placed at `rank(A[i]) + rank(B[j])` (tens one column left)
+[ ] every column's contributions summed
+[ ] carry resolved right → left
+[ ] leading zeros removed
+---
+Procedure B — Division ( N ÷ D → quotient Q, remainder R )
+Step 0 — predict quotient size (no calculation).
+`digits(Q) = digits(N) − digits(D)`, plus `1` if the leading `digits(D)` digits
+of `N` are `≥ D` (one magnitude comparison). Use this to size the answer up
+front.
+Step 1 — recognize Q.
+Recognize the quotient directly. For large `Q`, recognize it in chunks of a
+few digits; chunks are independent digits of one number and add no sequential
+depth.
+Step 2 — minimal guard (certification), reusing Procedure A.
+`P = Q × D` (Procedure A).
+`R = N − P` (subtraction).
+Compare `R` with `D`.
+±1 correction (rarely triggered):
+subtraction reports `N < P` → `Q` too large → `Q ← Q − 1`, redo;
+`R ≥ D` → `Q` too small → `Q ← Q + 1`, redo;
+else `Q` is certified with remainder `R`.
+Output: `N ÷ D = Q` remainder `R` (i.e. `N = Q × D + R`, `0 ≤ R < D`).
+Division checklist
+[ ] quotient size predicted via digit counts + one prefix comparison
+[ ] Q recognized (in chunks if large)
+[ ] guard computed: `P = Q × D`, `R = N − P`
+[ ] `0 ≤ R < D` verified
+[ ] ±1 correction applied if a check failed
+[ ] final identity `N = Q × D + R` holds
+---
+Reliability note
+At large sizes, recognizing a long quotient (or trusting a long product) in one
+shot is not reliable. The guard is mandatory, not optional: a multiplication
+result should satisfy its column/carry structure, and a division result MUST
+satisfy `N = Q × D + R` with `0 ≤ R < D`. Recognition proposes; the guard
+certifies. Never emit a final result that has not passed its guard.
