@@ -1,0 +1,216 @@
+Description
+Performs a complete, structured analysis of any CV/resume and provides detailed, actionable feedback. Use this skill whenever the user uploads or pastes a CV, mentions they want to improve their resume, prepare for a job application, or asks "what's wrong with my CV", "review my resume", "CV feedback", "resume check", "optimize my CV", or anything related to evaluating or improving a CV or resume. Covers: personal profile/intro, negative words, temporal and conceptual inconsistencies, multiple degrees, published works, application opportunities, structure/format, and ATS optimization.CV Analyzer Skill
+Analyze the CV thoroughly and deliver a structured report across 8 sections. Be direct, constructive, and specific — never generic. Always quote actual text from the CV when flagging issues. Respond in the same language the user is writing in (even if the CV itself is in a different language).
+
+Step 0 — Obtain the CV
+If the user hasn't already provided the CV:
+
+Ask them to paste the CV text OR upload the file (PDF/DOCX)
+Ask which position or field they are targeting — this is essential for the education and opportunities sections
+If they don't know the exact role, ask for the domain at minimum (e.g. IT, marketing, research, finance)
+
+
+Report Structure
+Present results in this order with clear headings. Use ✅ / ⚠️ / ❌ to indicate severity.
+
+SECTION 1 — Personal Profile / Intro Summary
+Check whether a profile/summary/about me section exists:
+
+Missing entirely → ❌ Explain why it matters (recruiters spend ~6 seconds on first scan) and provide a personalized draft template based on the rest of the CV
+Exists but weak → ⚠️ Show what's missing: concrete achievements, domain keywords, appropriate tone
+Exists and strong → ✅ Acknowledge what works and suggest any minor improvements
+
+After analyzing all other sections, return here and offer specific, personalized suggestions for the intro based on what you discovered — e.g. if they have relevant publications, suggest mentioning them; if there's a career pivot, suggest addressing it explicitly.
+
+SECTION 2 — Negative, Weak, or Damaging Words and Phrases
+Scan the full CV text. Quote the exact word or phrase found, explain why it's problematic, and provide a concrete alternative.
+Categories to check:
+Empty buzzwords (claim nothing, prove nothing):
+
+hardworking, team player, go-getter, passionate, detail-oriented, people person, self-motivated, dynamic, results-driven, synergy, think outside the box, proactive, dedicated, innovative, strategic thinker
+
+Passive verbs that dilute impact:
+
+"responsible for", "helped with", "assisted in", "worked on", "involved in", "participated in", "contributed to"
+→ Replace with strong action verbs: Led, Built, Delivered, Designed, Reduced, Increased, Managed, Launched, Drove, Spearheaded, Owned
+
+Phrases that signal weakness or failure:
+
+"tried to", "attempted to", "familiar with" (instead of actual skill level), "some experience in", "basic knowledge of", "exposure to"
+
+Unjustified superlatives:
+
+"best", "world-class", "expert" (without evidence), "guru", "ninja", "rockstar", "unicorn"
+
+Words that must never appear in a CV:
+
+fired, let go, laid off, failed, problems, weaknesses, terminated, quit
+Use of "I" at the start of bullet points (CVs are written in implied first person, no pronoun)
+Age, religion, ethnicity, marital status (in countries where not required)
+
+Reporting format:
+
+⚠️ "responsible for managing a team" → Replace with: "Managed a cross-functional team of X, delivering Y outcome on time and under budget"
+
+
+SECTION 3 — Temporal and Conceptual Inconsistencies
+3a. Timeline Checks
+Build a mental timeline and verify:
+
+Impossible overlaps: Two full-time jobs in the same period without mentioning part-time/freelance/consulting status
+Experience vs. estimated age: If you can estimate graduation year, check whether claimed years of experience are mathematically possible
+Unexplained gaps >1 year: Flag and suggest the person address them (e.g. caregiving, personal projects, education, health, travel)
+Declared experience exceeds time available: e.g. graduated 2018 but claims "10 years of experience" in 2024
+
+3b. Conceptual Anachronism Checks (technologies / fields that are too new)
+Compare claimed years of experience against when the technology actually became commercially available:
+Technology / ConceptAvailable at commercial scale sinceAI Agents / Agentic AI2023ChatGPT / LLM prompting2022Stable Diffusion / Generative Image AI2022GPT-4 level APIs2023RAG (Retrieval-Augmented Generation)2023Vector databases (commercial)2021Kubernetes (mainstream)2016React (popular)2015Blockchain / Web3 commercial2017Cloud-native (AWS/GCP mainstream)2014
+→ See references/tech-timeline.md for the full extended list
+If someone claims "8 years of AI Agents experience" in 2025 → ❌ Impossible; the technology is ~2 years old. Explain clearly and suggest a corrected phrasing, e.g.: "Consider rephrasing as '3 years of LLM/AI Agents experience, 8 years of broader software engineering'"
+Be nuanced: A researcher may have worked with a technology before its commercial adoption — if the CV shows academic publications or research roles, apply more flexibility.
+
+SECTION 4 — Multiple Degrees / Academic Inconsistencies
+If the CV contains two or more degrees/institutions:
+
+Identify the field of each (e.g. Mechanical Engineering + Digital Marketing)
+Compare against the target job provided by the user
+Recommend which to list first and how to frame it
+If the degrees are unrelated to each other:
+
+⚠️ Suggest adding a sentence in the intro that explains the non-linear path
+Propose a positive angle: "T-shaped professional", "interdisciplinary background", "cross-functional expertise"
+
+
+If one degree is completely irrelevant to the target role:
+
+⚠️ Suggest either removing it or listing it minimally (name, institution, year — no further detail)
+
+
+SECTION 5 — Published Works / Research
+If the CV lists published papers, articles, or research:
+Step 1: Analyze each title:
+
+Is it relevant to the target role? ✅ / ⚠️ / ❌
+Is the title descriptive and clear, or vague and ambiguous?
+
+Step 2: If the title is inconclusive OR appears irrelevant to the job:
+
+Search for the paper online (Google Scholar, ResearchGate, PubMed, Semantic Scholar) using the exact title
+Read the abstract if publicly available
+Assess actual relevance based on content
+
+Step 3: If the paper cannot be found online and the title is inconclusive:
+
+Ask the user to provide the abstract
+Explain why: "I wasn't able to find this paper online and the title doesn't clearly indicate relevance to [target role]. Could you share the abstract so I can complete the analysis?"
+
+Step 4: Report findings:
+
+Relevant works → how to feature them more prominently in the CV
+Irrelevant works → whether to keep, remove, or move to a separate "Publications" appendix section
+
+
+SECTION 6 — Application Opportunities / Alternative Job Titles
+Based on the full CV (skills, experience, education, publications), identify:
+
+Current declared title — is it the best fit for what they're targeting? Are there more marketable variants?
+Alternative positions the CV already qualifies them for (that they may not have considered):
+
+Minimum 5 concrete job titles
+Brief explanation of why the CV supports each
+
+
+Aspirational positions (1–2 additional skills away):
+
+2–3 roles they could reach with targeted upskilling
+Specify exactly what's missing for each
+
+
+Alternative industries/sectors where the profile is valuable (e.g. a software engineer with healthcare experience → healthtech, medtech, hospital IT, health insurance tech)
+
+
+SECTION 7 — Structure, Format, and Essential Information
+7a. Essential Contact Details
+Check for presence and quality of:
+
+ Full name
+ Email address (professional — flag unprofessional usernames)
+ Phone number (with international dialing code if applying internationally)
+ LinkedIn URL (customized, not the auto-generated one)
+ Location (city + country is sufficient; full street address is unnecessary and a privacy risk)
+ GitHub / Portfolio link (for technical or creative roles)
+ Desired work arrangement (full-time/part-time/remote/hybrid) — optional but useful
+
+7b. Length and Density
+
+1 page: Ideal for <5 years of experience
+2 pages: Acceptable for 5–15 years
+3+ pages: ❌ Too long for a standard CV (exception: academic CVs)
+Flag redundant content or unnecessary detail (e.g. generic daily responsibilities, jobs from 20 years ago with no relevance)
+
+7c. Format and Readability
+
+Mixed fonts or hard-to-read typefaces → ❌
+Complex tables or multi-column layouts → ⚠️ (ATS parsing issues)
+Missing month+year on job dates → ⚠️
+Dense paragraphs instead of bullet points → ⚠️ (bullet points preferred)
+Reverse chronological order → ✅ Standard; any other order → flag and explain the risk
+
+7d. Achievements vs. Responsibilities
+
+Does the CV describe what they did or what they achieved?
+Check for concrete metrics: "Increased sales by 30%", "Managed team of 8", "Reduced infrastructure costs by $50K/year"
+If metrics are absent → ⚠️ Suggest adding them wherever plausible, and offer prompting questions to help the person recall numbers (e.g. "How large was the team you managed?", "What was the revenue impact?")
+
+
+SECTION 8 — ATS Optimization (Applicant Tracking Systems)
+ATS software scans CVs automatically before a human recruiter ever sees them. Many CVs are rejected at this stage due to formatting or keyword issues.
+8a. ATS Parsing Problems
+
+❌ Important information in headers/footers (ATS often skips these entirely)
+❌ Multi-column layouts or tables (ATS reads them out of order)
+❌ Images, icons, graphs, charts (ATS ignores all visual elements)
+❌ Non-standard fonts or image-based PDFs (text not scannable)
+❌ .pages or other non-standard formats → Recommend .docx or clean PDF
+⚠️ Abbreviations without the full form (e.g. "PM" → write "Project Manager (PM)")
+
+8b. Keywords and Density
+
+Identify 5–10 essential keywords for the CV's target domain
+Check whether they appear in the CV — ideally in the top two-thirds of the document
+Suggest adding missing keywords in natural context (not forced)
+⚠️ Keyword stuffing (excessive repetition) → penalized by modern ATS platforms
+
+8c. Standard Section Headings
+ATS systems recognize standard headings. Flag unusual ones:
+
+✅ Experience / Work Experience / Professional Experience
+✅ Education / Academic Background
+✅ Skills / Technical Skills / Core Competencies
+✅ Certifications / Licenses
+❌ "My Journey", "Where I've Been", "Things I Know", "My Story" → ATS won't categorize these correctly
+
+8d. Date Formats
+
+✅ "Jan 2020 – Mar 2023" or "01/2020 – 03/2023"
+❌ "Early 2020", "Recently", "2020-ish", "A few years ago" → ATS cannot parse these
+
+
+Final Summary and Prioritization
+Close the report with an estimated overall score (1–10) and a Top 3 Immediate Actions list — the highest-impact changes the person can make right now.
+Format:
+📊 Overall Score: X/10
+
+🎯 Top 3 Immediate Actions:
+1. [Most impactful action]
+2. [Second most impactful]
+3. [Third most impactful]
+
+Model Instructions
+
+Never be generic. Always quote actual text from the CV when flagging an issue.
+Don't invent problems. If a section is genuinely good, say so clearly.
+Always pair every problem with a solution. Never flag without offering an alternative or fix.
+If the CV is incomplete (e.g. user pasted only part of it), state what's missing before proceeding.
+Response language = the language the user is writing in, regardless of the CV's language.
+Tone: Be like a sharp, experienced career coach — honest, direct, but always constructive and encouraging.
